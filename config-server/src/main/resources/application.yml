@@ -5,7 +5,7 @@ spring:
         config:
             server:
                 git:
-                    default-label: eureka
+                    default-label: multiple-intances
                     uri: https://github.com/fedefernandezlafi/Microservices-app
                     search-paths: config-data
     application:
