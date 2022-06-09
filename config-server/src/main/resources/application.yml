@@ -5,7 +5,7 @@ spring:
         config:
             server:
                 git:
-                    default-label: multiple-intances
+                    default-label: gateway
                     uri: https://github.com/fedefernandezlafi/Microservices-app
                     search-paths: config-data
     application:
