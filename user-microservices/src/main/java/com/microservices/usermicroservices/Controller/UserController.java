@@ -1,5 +1,6 @@
 package com.microservices.usermicroservices.Controller;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.cloud.CircuitBreaker.*;
 import com.microservices.usermicroservices.Entity.Users;
 import com.microservices.usermicroservices.Models.Bike;
 import com.microservices.usermicroservices.Models.Car;
 import com.microservices.usermicroservices.Service.UserService;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 import java.util.List;
 import java.util.Map;
 
@@ -82,24 +85,24 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
     
-    private ResponseEntity<List<Car>> fallbackGetCars (@PathVariable ("userId") long userId, RuntimeException e) {
-        return ResponseEntity("El usuario " + userId + "tiene los autos en el taller", HttpStatus.OK);
+    private ResponseEntity<String> fallbackGetCars (@PathVariable ("userId") long userId, RuntimeException e) {
+        return ResponseEntity.ok("El usuario " + userId + "tiene los autos en el taller");
     }
 
-    private ResponseEntity<Car> fallbackSaveCars (@PathVariable ("userId") long userId, @RequestBody Car car, RuntimeException e ) {
-        return ResponseEntity("El usuario " + userId + "no tiene dinero para autos", HttpStatus.OK);
+    private ResponseEntity<String> fallbackSaveCars (@PathVariable ("userId") long userId, @RequestBody Car car, RuntimeException e ) {
+        return ResponseEntity.ok("El usuario " + userId + "no tiene dinero para autos");
     }
 
-    private ResponseEntity<List<Bike>> fallbackGetBikes (@PathVariable ("userId") long userId, RuntimeException e) {
-        return ResponseEntity("El usuario " + userId + "tiene las motos en el taller", HttpStatus.OK);
+    private ResponseEntity<String> fallbackGetBikes (@PathVariable ("userId") long userId, RuntimeException e) {
+        return ResponseEntity.ok("El usuario " + userId + "tiene las motos en el taller");
     }
 
-    private ResponseEntity<Bike> fallbackSaveBikes (@PathVariable ("userId") long userId, @RequestBody Bike bike, RuntimeException e ) {
-        return ResponseEntity("El usuario " + userId + "no tiene dinero para motos", HttpStatus.OK);
+    private ResponseEntity<String> fallbackSaveBikes (@PathVariable ("userId") long userId, @RequestBody Bike bike, RuntimeException e ) {
+        return ResponseEntity.ok("El usuario " + userId + "no tiene dinero para motos");
     }
 
-    private ResponseEntity<Bike> fallbackGetAll (@PathVariable ("userId") long userId, RuntimeException e) {
-        return ResponseEntity("El usuario " + userId + "tiene los vehiculos en el taller", HttpStatus.OK);
+    private ResponseEntity<String> fallbackGetAll (@PathVariable ("userId") long userId, RuntimeException e) {
+        return ResponseEntity.ok("El usuario " + userId + "tiene los vehiculos en el taller");
     }
     
 }
